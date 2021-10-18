@@ -1,0 +1,252 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
+\usepackage{xcolor}
+\usepackage{multicol}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage{mathtools} % was added on 2021-09-24
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+\pagestyle{fancy}
+
+\newenvironment{problem}[2][Problem]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2}\\}
+    {  \end{mdframed}}
+
+\newenvironment{impdef}[1]
+    { \begin{mdframed}[backgroundcolor=green!10] \textbf{#1} \vspace{0.15cm}\\}
+    {  \end{mdframed}}
+
+\newenvironment{regdef}[2][Def.]
+    { \begin{mdframed}[backgroundcolor=yellow!10] \textbf{#1} {#2}. \vspace{0.05cm}\\}
+    {  \end{mdframed}}
+    
+\newenvironment{theorem}[2][Thm.]
+    { \begin{mdframed}[backgroundcolor=blue!10] \textbf{#1} {#2} \vspace{0.2cm}\\}
+    {  \end{mdframed}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define solution environment
+\newenvironment{solution}[2][Solution.]
+    { \begin{mdframed}[] \textbf{#1 #2} \\}
+    {  \end{mdframed}}    
+
+% Define proof environment
+\newenvironment{prf}[2][Proof.]
+    { \begin{mdframed}[] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Fill in the appropriate information below
+\lhead{}
+\rhead{MAT157: Alex R} 
+\chead{\textbf{W1 Properties and order relations on $\R$}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% my commands, ignore these if you want
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\pf}{\textit{Proof. }}
+\newcommand{\lm}{\textit{Lemma. }}
+\newcommand{\union}{\cup}
+\newcommand{\inter}{\cap}
+\newcommand{\ep}{\hfill $\blacksquare$\nl}
+\newcommand{\ec}{\hfill $\square$\nn}
+
+
+\begin{document}
+    
+    \begin{impdef}{FUNCTION}
+        If $A$ and $B$ are sets, a \textit{function} is a unique assignment of every element in $A$ to an element of $B$. We write $f: A \to B$ to denote a function.
+        \begin{itemize}
+            \item $\textbf{Domain} = A$
+            \item $\textbf{Codomain} = B$
+            \item $\textbf{Range} = f(A) = \{f(x): x \in A\} \subseteq B$
+        \end{itemize}
+    \end{impdef}
+        
+    \begin{regdef}{Well-defined function}
+        A map $f: A \to B$ is \textit{well-defined}, if $(\forall x, y \in A)[x=y \Rightarrow f(x)=f(y)]$.
+    \end{regdef}
+    
+    \begin{impdef}{INJECTIVITY}
+        A function $f: A \to B$ is \textit{injective}, if $(\forall x, y \in A)[f(x)=f(y) \Rightarrow x=y]$.
+        \begin{itemize}
+            \item[\textbf{--}] Every $A$ has unique $B$.
+            \item[\textbf{--}] Every $B$ comes from unique $A$ or nothing at all.
+        \end{itemize}
+    \end{impdef}
+    
+    \begin{impdef}{SURJECTIVITY}
+        A function $f: A \to B$ is \textit{surjective}, if $(\forall y \in B)[\exists x \in A, f(x) = y]$.
+        \begin{itemize}
+            \item[\textbf{--}] Every element in the codomain is obtainable.
+        \end{itemize}
+    \end{impdef}
+    
+    \begin{impdef}{BIJECTIVITY}
+        A function $f: A \to B$ is \textit{bijective}, if it is both \textit{injective} and \textit{surjective}.
+        \begin{itemize}
+            \item[\textbf{--}] Every element is obtainable in a unique way.
+            \item[\textbf{--}] There is matching between elements of $A$ and $B$, i.e. function $f$ is \textit{invertible}. 
+        \end{itemize}
+    \end{impdef}
+    
+    \begin{regdef}{Cardinality}
+        \textit{Cardinality} of a set $S$ is the a measure of the "number of elements" in $S$, denoted $|S|$.
+        \begin{itemize}
+            \item \textbf{Injectivity.} If there is an injection from $S\to T$, then $|S| \le |T|$.
+            \item \textbf{Countability.} A set $S$ is \textit{countable}, if $|S| \le |\N|$.
+            \item \textbf{Bijectivity.} $|S| = |T|$, if there exists a bijection $S\to T$.
+        \end{itemize}
+    \end{regdef}
+    
+    \begin{theorem}{\textbf{[Cantor–Bernstein-Schröder]}, a.k.a. the \textbf{CBT}}
+        If $S$, $T$ are two sets with $|S| \le |T|$ and $|T| \le |S|$, then $|S| = |T|$.
+        \begin{itemize}
+            \item[\textbf{--}] "Left injection" + "Right injection" = "Bijection".
+        \end{itemize}
+    \end{theorem}
+    
+    \clearpage
+    
+    \begin{theorem}{Transitivity of injectivity.}
+        If $f: B\to C$ and $g: A\to B$ are both injective then their composition $f \circ g$ is also injective.
+    \end{theorem}
+    \begin{prf}{}
+        By the definition of injectivity, we have the following.
+        \[(\forall a_1, a_2)[g(a_1) = g(a_2) \Rightarrow a_1 = a_2]\]
+        \[(\forall b_1, b_2)[f(b_1) = f(b_2) \Rightarrow b_1 = b_2]\]
+        Want to show, the following.
+        
+        \[(\forall a_1, a_2)[f(g(a_1)) = f(g(a_2)) \Rightarrow a_1 = a_2]\]
+        
+        Assume that $f(g(a_1)) = f(g(a_2))$. 
+        \begin{itemize}
+            \item Since $f$ is injective, $g(a_1) = g(a_2)$. 
+            \item Since $g$ is injective, $a_1 = a_2$.
+        \end{itemize} \ep
+    \end{prf}
+    
+    \begin{problem}{1.}
+        If $f: B \to C$ and $g: A\to B$ are such that $f \circ g$ is injective, then $g$ is injective. Also, $f$ does not have to be injective.
+    \end{problem}
+    
+    \begin{solution}{}
+        We have the following.
+        \[(\forall a, b)[f(g(a)) = f(g(b)) \Rightarrow a = b]\]
+        Want to show the following.
+        \[(\forall a, b)[g(a) = g(b) \Rightarrow a = b]\]
+        
+        Assume $g(a) = g(b)$.
+        \begin{itemize}
+            \item Since $f$ is a well-defined function, $f(g(a)) = f(g(b))$.
+            \item Since $f \circ g$ is injective, $a = b$.
+        \end{itemize} \ec
+    \end{solution}
+    
+    \clearpage
+    
+    \begin{impdef}{INVERTIBILITY}
+        \textit{Inverse} of a function $f:A\to B$ is a function $f^{-1}:B\to A$ that satisfies $f^{-1} \circ f = \text{id}_A$ and $f \circ f^{-1} = \text{id}_B$.
+        
+        \begin{itemize}
+            \item Function is called \textit{left-invertible}, if $f^{-1} \circ f = \text{id}_A$.
+            \item Function is called \textit{right-invertible}, if $f\circ f^{-1} = \text{id}_B$.
+        \end{itemize}
+    \end{impdef}
+    
+    \begin{theorem}{Injectivity $\Leftrightarrow$ Left-invertibility}
+        Suppose $g: A\to B$ is a function. Then $g$ is injective if and only if there exists a function $h: B\to A$ such that $(h\circ g) = \text{id}_A$.
+    \end{theorem}
+    
+    \begin{prf}{($\Longleftarrow$), (mimics Problem 1.)}
+        We have that $h \circ g = \text{id}_A$, consequently the following is true.
+        \[(\forall a,b \in A)[h(g(a)) = h(g(b)) \Rightarrow a = b]\]
+        Want to show the following.
+        \[(\forall a,b \in A)[g(a) = g(b) \Rightarrow a = b]\]
+        
+        Find the exact solution in \textbf{Problem 1.}
+    \end{prf}
+    
+    \begin{prf}{($\Longrightarrow$)}
+        The function can be defined explicitly.
+        \begin{enumerate}
+            \item Fix some element $a_0 \in A$.
+            \item Define $h: B\to A$ as
+            $\left[h(b) = \begin{cases}
+                \hfill
+                a & \text{if $g(a) = b$}\\
+                a_0 & \text{otherwise}
+            \end{cases}\right]$.
+        \end{enumerate}
+        \[(h\circ g)(a) = h(g(a)) = a, \hspace{0,5cm}\text{so we have}\hspace{0,5cm} h\circ g = \text{id}_A\]\ep
+    \end{prf}
+    
+    \begin{theorem}{Surjectivity $\Leftrightarrow$ Right-invertibility}
+        Suppose $g: A\to B$ is a function. Then $g$ is injective if and only if there exists a function $h: B\to A$ such that $(g\circ h) = \text{id}_B$.
+    \end{theorem}
+    
+    \begin{theorem}{\textbf{BIJECTIVITY $\Leftrightarrow$ INVERTIBILITY}}
+        A function $f: A \to B$ is bijective $\Leftrightarrow$ $f$ has an inverse.
+    \end{theorem}
+    
+    \clearpage
+    
+    \begin{theorem}{\textit{A countable union of (disjoint) countable sets is countable.}}
+        For any collection $\left\{A_i: i \in I, |A_i| \le |\N|\right\}$ where $|I| \le |\N|$, we have $|\union_{i\in I} A_i| \le |\N|$.
+        
+        \begin{itemize}
+            \item[\textbf{--}] "Countability squared" = "Countability"
+        \end{itemize}
+    \end{theorem}
+    \begin{prf}{}
+        We know $\exists f: I \xhookrightarrow{} \N$ which is injective, and $(\forall i \in I)[\exists g_i: A_i \xhookrightarrow{} \N]$ which is injective. \vspace{0.25cm}
+        
+        Define a map $$F: \bigcup_{i\in I} A_i \to \N, \hspace{0.25cm} a \mapsto 2^{f(n)}\cdot 3^{g_n(a)}, \hspace{0.25cm} \text{where $a \in A_n$.}$$
+        
+        Power of $2$ tracks the set. Power of $3$ tracks the element within the set. By the \textit{Fundamental Theorem of Arithmetic}, $F$ is truly injective. \ep
+    \end{prf}
+    
+    \begin{theorem}{$|\N| = |\Z| = |\Q|$}
+        Integers and rationals are countable.
+    \end{theorem}
+    \begin{prf}{}
+        Proof if these facts is fairly simply.
+        \begin{enumerate}
+            \item $\N \subset \Z \subset \Q \Rightarrow |\N| \le |\Z| \le |\Q|$
+            \item $\Z = \{-1, 0, 1\} \times \N \Rightarrow |\Z| \le |\N|$, according to the properties of a countable union of countable sets.
+            \item $\Q = \N \times \Z \Rightarrow |\Q| \le |\N|$, according to the properties of a countable union of countable sets.
+        \end{enumerate}
+        Thus, integers and rationals are truly countable.
+    \end{prf}
+    
+    \begin{theorem}{$|\R| > |\N|$}
+        The set of real numbers is not countable.
+    \end{theorem}
+    
+    \begin{prf}{"Gaussian Diagonalization"}
+    This is just an instruction for the proof.
+        \begin{enumerate}
+            \item Prove that $|(0, 1)| = |\R|$.
+            \item For the sake of contradiction, assume that $|(0, 1)| = |\N|$.
+            \item "Invert" all digits on the diagonal, avoiding assigning the $base-1$ digit.
+            \item The obtained number is real and will not match with any of our numbers. 
+            \item Since we claimed to write down all real numbers this is a contradiction. 
+            \ep
+        \end{enumerate}
+    \end{prf}
+
+\end{document}
